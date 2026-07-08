@@ -1,10 +1,12 @@
+import React, { useContext } from "react";
+//import { QuizContext } from "../context/quiz-context";
 
 //build the UI for the results
 function Results ({questionBank, userAnswers, restartQuiz}){
 
     function getScore(){
 
-        let FinalScore = 0;
+        let finalScore = 0;
 
         userAnswers.forEach((answer, index)=> {
 
@@ -13,7 +15,7 @@ function Results ({questionBank, userAnswers, restartQuiz}){
                 finalScore++
             }
         })
-        returnFinalScore
+        return finalScore
     }
     //variable that keeps track of the answers that were correct
     const score = getScore()

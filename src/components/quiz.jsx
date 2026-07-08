@@ -56,11 +56,13 @@ function Quiz (){
         ]
 
 
-        {/**using hooks (STATE that keeps track of all the answersas a list) */}
+        {/**using hooks (STATE that keeps track of all the answers as a list) */}
 
-        const initialAnswers = ["null", "null", "null", "null"]
+        const initialAnswers = [null, null, null, null]
 
         const [userAnswers, setUserAnswers] = useState(initialAnswers)
+
+        console.log(userAnswers)
         
         {/**Creating a State */}
         const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -83,7 +85,7 @@ function Quiz (){
 
         }
 
-        //creating a function that allows the user to got to the next question
+        //creating a function that allows the user to go to the next question
 
         function goToNext (){
 
@@ -107,8 +109,6 @@ function Quiz (){
             } }
         //check if we are at the end of the quiz
 
-
-
     function restartQuiz(){
 
         setUserAnswers(initialAnswers)
@@ -129,62 +129,47 @@ function Quiz (){
   
     
     <div>
-        <h2>Question {currentQuestion +1}</h2>
+    <h2>Question {currentQuestion + 1}</h2>
 
-        {/*accessing the qstn from the array and the object */}
-        <p className="question">{questionBank[0].question}</p>
+    <p className="question">
+        {questionBank[currentQuestion].question}
+    </p>
 
-        {/*displaying options using a button */}
-        <button className="option">Java</button>
-        <button className="option">Python</button>
-        <button className="option">Css</button>
-        <button className="option">C#</button>
+    {questionBank[currentQuestion].options.map((option) => (
+        <button
+            key={option}
+            className={
+                "option" +
+                (selectedAnswer === option ? " selected" : "")
+            }
+            onClick={() => handleSelectOption(option)}
+        >
+            {option}
+        </button>
+    ))}
 
-           <h2>Question 2</h2>
+    <div className="nav-buttons">
+        <button
+            onClick={gotToPrev}
+            disabled={currentQuestion === 0}
+        >
+            Previous
+        </button>
 
-        {/**display the options through looping */}
-           <p className="question">{questionBank[1].question}</p>
-
-            {/*map - js array method, it renders the array (describing what the UI should look like)*/}
-           {questionBank[1].options.map((option) => 
-           <button className={"option" + (selectedAnswer === option?" selected" : " ")} onClick={()=> handleSelectOption(option)} > {" "}{option} {" "}</button>
-        
-        )}
-
-            <h2>Question 3</h2>
-
-        {/**display the options through looping */}
-           <p className="question">{questionBank[2].question}</p>
-
-           {questionBank[2].options.map((option) => <button className="option">{option}</button>
-        
-        )}
-
-            <h2>Question 4</h2>
-
-        {/**display the options through looping */}
-           <p className="question">{questionBank[3].question}</p>
-
-           {questionBank[3].options.map((option) => <button className="option">{option}</button>
-        
-        )}
-
-            <div className="nav-buttons">
-                <button onClick = {gotToPrev} disabled = {currentQuestion===0}>Previous</button>
-                <button onClick = {goToNext} disabled ={!selectedAnswer}>
-                    
-                    {currentQuestion === questionBank.length -1 ? "Finish Quiz" : "Next"}
-                    
-                    </button>
-            </div>
-    
+        <button
+            onClick={goToNext}
+            disabled={!selectedAnswer}
+        >
+            {currentQuestion === questionBank.length - 1
+                ? "Finish Quiz"
+                : "Next"}
+        </button>
     </div>
-    );
-    
-}
+</div>)
 
 // accessing the 'Quiz' function from App.jsx
     //export 
-
+            }
     export default Quiz;
 
+            
